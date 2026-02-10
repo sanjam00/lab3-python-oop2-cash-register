@@ -7,6 +7,7 @@ class CashRegister:
     self.items = []
     self.previous_transactions = []
 
+  # verify that discount is a number and in between 0 and 100
   @property
   def discount(self):
     return self._discount
@@ -17,3 +18,28 @@ class CashRegister:
       self._discount = value
     else:
       print("Not valid discount")
+
+  # 
+  def add_item(self, item, price, quantity=1):
+    self.total += price * quantity
+    self.items.append(item)
+    new_transaction = {
+      "item": item,
+      "price": price,
+      "quantity": quantity
+    }
+    self.previous_transactions.append(new_transaction)
+
+  def apply_discount(self):
+    if self.discount > 0:
+      self.total = (self.discount/100) * self.total
+      print(f"After the disocunt, total comes to ${self.total}")
+    else:
+      print("There is no discount to apply.")
+
+trans1 = CashRegister(10, 0)
+# print(trans1)
+trans1.add_item("Bread", 5, 10)
+trans1.apply_discount()
+print(trans1.previous_transactions)
+print(trans1.total)
